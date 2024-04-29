@@ -64,3 +64,5 @@ class FileStorage:
             item = "{}.{}".format(cls, uid)
             del self.__objects[item]
             self.save()
+        else:
+            return
