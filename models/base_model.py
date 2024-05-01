@@ -25,7 +25,7 @@ class BaseModel:
             self.updated_at = datetime.now()
         else:
             for k, v in kwargs.items():
-                if k == "created_at" or k == "updated_a":
+                if k == "created_at" or k == "updated_at":
                     v = datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f")
                 if getattr(self, k, None) is None:
                     setattr(self, k, v)
@@ -44,14 +44,12 @@ class BaseModel:
 
     def to_dict(self):
         """Convert instance into dict format"""
-        dictionary = {}
-        dictionary.update(self.__dict__)
-        dictionary.update({'__class__':
-                          (str(type(self)).split('.')[-1]).split('\'')[0]})
+        dictionary = self.__dict__.copy()
+        dictionary['__class__'] = type(self).__name__
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         if '_sa_instance_state' in dictionary.keys():
-            dictionary.pop('_sa_instance_state', None)
+            del dictionary['_sa_instance_state']
         return dictionary
 
     def delete(self):
