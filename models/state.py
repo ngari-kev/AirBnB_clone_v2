@@ -13,3 +13,8 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
     cities = relationship("City", back_populates="state",
                           cascade="all, delete-orphan")
+
+    @property
+    def cities(self):
+        cities = storage.all(City)
+        return [city for city in cities.values() if city.state_id == self.id]
