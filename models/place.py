@@ -34,4 +34,3 @@ class Place(BaseModel, Base):
             if rev.place_id == self.id:
                 rev_list.append(rev)
         return rev_list
-
