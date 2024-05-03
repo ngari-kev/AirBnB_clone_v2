@@ -18,17 +18,14 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
-        if not kwargs:
-            from models import storage
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
-        else:
-            for k, v in kwargs.items():
-                if k == "created_at" or k == "updated_at":
-                    v = datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f")
-                if getattr(self, k, None) is None:
-                    setattr(self, k, v)
+        self.id = str(uuid.uuid4())
+        self.created_at = self.updated_at = datetime.utcnow()
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                if key != "__class__":
+                    setattr(self, key, value)
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -46,9 +43,9 @@ class BaseModel:
         """Convert instance into dict format"""
         dictionary = self.__dict__.copy()
         dictionary['__class__'] = type(self).__name__
-        if self.created_at:
+        if hasattr(self, 'created_at') and self.created_at:
             dictionary['created_at'] = self.created_at.isoformat()
-        if self.updated_at:
+        if hasattr(self, 'updated_at') and self.updated_at:
             dictionary['updated_at'] = self.updated_at.isoformat()
         if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
