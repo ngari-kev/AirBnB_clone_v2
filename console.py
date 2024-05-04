@@ -128,11 +128,13 @@ class HBNBCommand(cmd.Cmd):
         kwargs = {}
 
         for item in args_list[1:]:
-            arg_splitted = item.split("=")
-            arg_splitted[1] = eval(arg_splitted[1])
-            if type(arg_splitted[1]) is str:
-                arg_splitted[1] = arg_splitted[1].replace("_", " ").replace('"', '\\"')
-            kwargs[arg_splitted[0]] = arg_splitted[1]
+            arg_split = item.split("=")
+            arg_split[1] = eval(arg_split[1])
+
+            a = "_"
+            if type(arg_split[1]) is str:
+                arg_split[1] = arg_split[1].replace(a, " ").replace('"', '\\"')
+            kwargs[arg_split[0]] = arg_split[1]
 
         new_instance = HBNBCommand.classes[class_name](**kwargs)
 
