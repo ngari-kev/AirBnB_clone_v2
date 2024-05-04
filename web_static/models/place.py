@@ -2,7 +2,7 @@
 """ Place Module for HBNB project """
 from os import getenv
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
+from sqlalchemy import Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 
 
@@ -18,17 +18,9 @@ class Place(BaseModel, Base):
     number_bathrooms = Column(Integer, default=0, nullable=False)
     max_guest = Column(Integer, default=0, nullable=False)
     price_by_night = Column(Integer, default=0, nullable=False)
-    latitude = Column(Float, nullable=True)
-    longitude = Column(Float, nullable=True)
+    latitude = Column(Float, nullable=False)
+    longitude = Column(Float, nullable=False)
     amenity_ids = []
-
-    place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60),
-                                 ForeignKey('places.id'), primary_key=True),
-                          Column('amenity_id', String(60),
-                                 ForeignKey('amenities.id'), primary_key=True), extend_existing=True)
-    amenities = relationship('Amenity', secondary=place_amenity,
-                             viewonly=False)
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
         reviews = relationship("Review", backref="place", cascade="delete")
@@ -42,21 +34,3 @@ class Place(BaseModel, Base):
             if rev.place_id == self.id:
                 rev_list.append(rev)
         return rev_list
-
-    @property
-    def amenities(self):
-        """Getter attribute for amenities"""
-        from models import storage
-        amenities_list = []
-        for amenity_id in self.amenity_ids:
-            amenity = storage.get('Amenity', amenity_id)
-
-        if amenity:
-            amenities_list.append(amenity)
-        return amenities_list
-
-    @amenities.setter
-    def amenities(self, amenity):
-        """setter attribute for amenities"""
-        if isinstance(amenity, Amenity):
-            self.amenity_ids.append(amenit.id)
