@@ -50,7 +50,6 @@ class Place(BaseModel, Base):
     @property
     def amenities(self):
         """Getter attribute for amenities"""
-        from models import storage
         amenities_list = []
         for amenity_id in self.amenity_ids:
             amenity = storage.get('Amenity', amenity_id)
@@ -63,4 +62,4 @@ class Place(BaseModel, Base):
     def amenities(self, amenity):
         """setter attribute for amenities"""
         if isinstance(amenity, Amenity):
-            self.amenity_ids.append(amenit.id)
+            self.amenity_ids.append(amenity.id)
