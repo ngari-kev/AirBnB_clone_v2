@@ -17,6 +17,6 @@ class Amenity(BaseModel, Base):
                                    primary_key=True),
                             Column('place_id', String(60),
                                    ForeignKey('places.id'),
-                                   primary_key=True))
+                                   primary_key=True), extend_existing=True)
 
     places = relationship("Place", secondary=place_amenities, viewonly=False)
