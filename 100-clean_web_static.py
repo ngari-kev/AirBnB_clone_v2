@@ -7,6 +7,7 @@ from fabric.api import env, local, run, lcd, cd, sudo
 
 env.hosts = ['52.91.124.142', '52.91.118.158']
 
+
 def do_clean(number=0):
     """
     Deletes out-of-date archives from local and remote servers.
@@ -22,7 +23,8 @@ def do_clean(number=0):
         number = 1
 
     # Clean local archives
-    local_archives = local('ls -t ~/AirBnB_clone_v2/versions', capture=True).split()
+    local_archives = local('ls -t ~/AirBnB_clone_v2/versions',
+                           capture=True).split()
     if len(local_archives) > number:
         archives_to_delete = local_archives[number:]
         with lcd('~/AirBnB_clone_v2/versions'):
