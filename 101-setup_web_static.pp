@@ -70,6 +70,29 @@ exec { 'sudo chown -R ubuntu:ubuntu /data/':
     path => '/usr/bin/:/usr/local/bin/:/bin/'
 }
 
+#create directories
+file { '/var/www':
+  ensure => 'directory'
+}
+file { '/var/www/html':
+  ensure => 'directory'
+}
+
+#Add content to html file
+file { '/var/www/html/index.html':
+  ensure  => 'present',
+  content => "Holberton School Nginx\n"
+}
+file { '/var/www/html/404.html':
+  ensure  => 'present',
+  content => "Ceci n'est pas une page\n"
+}
+
+#append to config file
+file { '/etc/nginx/sites-available/default':
+  ensure  => 'present',
+  content => $nginx_conf
+}
 # restart nginx
 exec { 'restart service':
   command => 'service nginx restart',
