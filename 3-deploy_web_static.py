@@ -42,7 +42,7 @@ def do_deploy(archive_path):
     file_name = archive_path.split("/")[-1]
     dir_ = '/data/web_static/releases/'
     dest_dir = dir_ + "{}".format(file_name.split('.')[0])
-    tmp = "/tmp/{}".format(file_name)
+    tmp = "/tmp/" + file_name
 
     try:
         put(archive_path, "/tmp")
@@ -59,9 +59,10 @@ def do_deploy(archive_path):
         run("rm -rf /data/web_static/current")
 
         run("ln -s {}/ /data/web_static/current".format(dest_dir))
+        print('New version deployed!')
         return True
 
-    except Exception as e:
+    except:
         return False
 
 
@@ -74,8 +75,7 @@ def deploy():
     Returns:
         True if deployment succeeded, otherwise False.
     """
-    archive_path = do_pack()
-    if exists(archive_path) is False:
+    new_archive_path = do_pack()
+    if exists(new_archive_path) is False:
         return False
-    result = do_deploy(new_archive_path)
-    return result
+    return do_deploy(new_archive_path)
