@@ -61,7 +61,7 @@ file { '/data/web_static/releases/test/index.html':
 
 #create a symbolic link
 file { '/data/web_static/current':
-    ensure => 'link'
+    ensure => 'link',
     target => '/data/web_static/releases/test/'
 }
 
