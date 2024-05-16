@@ -26,7 +26,7 @@ def do_deploy(archive_path):
     file_name = archive_path.split("/")[-1]
     dir_ = '/data/web_static/releases/'
     dest_dir = dir_ + "{}".format(file_name.split('.')[0])
-    tmp = "/tmp/{}".format(file_name)
+    tmp = "/tmp/" + filename
 
     try:
         put(archive_path, "/tmp")
@@ -45,5 +45,5 @@ def do_deploy(archive_path):
         run("ln -s {}/ /data/web_static/current".format(dest_dir))
         return True
 
-    except Exception as e:
+    except:
         return False
