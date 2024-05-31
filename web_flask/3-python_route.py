@@ -26,7 +26,7 @@ def text(text):
     return "C %s" % text
 
 
-@app.route("/python/", defaults={'text': 'is_cool'},strict_slashes=False)
+@app.route("/python/", defaults={'text': 'is_cool'}, strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
 def python(text):
     """Returns Python followed by the value of text."""
