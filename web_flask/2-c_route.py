@@ -18,6 +18,7 @@ def hello():
     """Returns HBNB."""
     return "HBNB"
 
+
 @app.route("/c/<text>", strict_slashes=False)
 def text(text):
     """Return C followed by name"""
