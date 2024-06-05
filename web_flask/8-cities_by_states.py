@@ -17,7 +17,7 @@ def teardown(exception):
     storage.close()
 
 
-@app.route('/states_list')
+@app.route('/cities_by_states')
 def HTMLPage():
     """Displays a HTML page of list of states inside the tag body."""
     states = storage.all(State).values()
