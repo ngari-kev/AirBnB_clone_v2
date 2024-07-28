@@ -29,7 +29,7 @@ def display_text(text):
 @app.route("/python/<text>", strict_slashes=False)
 def python_with_text(text):
     """Displays Python followed by the value of text."""
-    return "Python " +  text.replace('_', ' ')
+    return "Python " + text.replace('_', ' ')
 
 
 if __name__ == "__main__":
