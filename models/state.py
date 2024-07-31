@@ -16,6 +16,7 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
+        """Getter for cities in State"""
         from models import storage
         cities = storage.all(City)
         return [city for city in cities.values() if city.state_id == self.id]
