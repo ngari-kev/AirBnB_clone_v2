@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 
 @app.route("/", strict_slashes=False)
+@app.route("/airbnb-onepage/", strict_slashes=False)
 def hello_world():
     """Displays Hello HBNB."""
     return "Hello HBNB!"
